@@ -7,7 +7,7 @@ view: ticket_assignee_fact {
         , count(*) as lifetime_tickets
         , min(created_at) as first_ticket
         , max(created_at) as latest_ticket
-        , 1.0 * COUNT(*) / NULLIF(DATE_DIFF(CURRENT_DATE, MIN(EXTRACT(date from created_at)), day), 0) AS avg_tickets_per_day
+        , 1.0 * COUNT(*) / COALESCE(EXTRACT(EPOCH FROM AGE(MIN(EXTRACT(date from created_at)), CAST(NOW() AS DATE)  )) / 86400, 0) AS avg_tickets_per_day
       FROM ${ticket.SQL_TABLE_NAME}
       GROUP BY 1
        ;;

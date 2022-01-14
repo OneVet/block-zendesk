@@ -129,9 +129,12 @@ view: ticket {
     sql: ${TABLE}.custom_ticket_type ;;
   }
 
-  dimension: days_since_updated {
-    type: number
-    sql: 1.00 * DATE_DIFF(CURRENT_DATE(), ${last_updated_date}, DAY)  ;;
+  dimension_group: since_updated {
+    type: duration
+    intervals:[hour]
+    sql_start: ${last_updated_date} ;;
+    sql_end: CURRENT_DATE ;;
+
     html: {% if value > 60 %}
             <div style="color: white; background-color: darkred; font-size:100%; text-align:center">{{ rendered_value }}</div>
           {% else %}
@@ -195,6 +198,7 @@ view: ticket {
   dimension: is_responded_to {
     type: yesno
     sql: ${minutes_to_first_response} is not null ;;
+
   }
 
   dimension_group: last_updated {
@@ -351,31 +355,19 @@ view: ticket {
 
   #### TIME TO X fields ####
 
-  dimension: days_to_solve {
-    type: number
-    sql: 1.00 * DATE_DIFF(${ticket_history_fact.solved_date}, ${created_date}, DAY) ;;
+  dimension_group: to_first_response {
+    type: duration
+    intervals: [day, hour, minute ]
+    sql_start: ${created_date} ;;
+    sql_end: ${ticket_history_fact.first_response_date} ;;
   }
 
-  dimension: days_to_first_response {
-    type: number
-    sql: 1.00 * DATE_DIFF(${ticket_history_fact.first_response_date}, ${created_date}, DAY) ;;
-  }
-
-  dimension: minutes_to_first_response {
-    type: number
-    sql: 1.00 * TIMESTAMP_DIFF(${ticket_history_fact.first_response_raw}, ${created_raw}, MINUTE) ;;
-  }
-
-  dimension: hours_to_first_response {
-    type: number
-    sql: 1.00 * TIMESTAMP_DIFF(${ticket_history_fact.first_response_raw}, ${created_raw}, HOUR) ;;
-  }
-
-  dimension: hours_to_solve {
-    type: number
-    sql: 1.00 * DATETIME_DIFF(${ticket_history_fact.solved_raw}, ${created_raw}, HOUR) ;;
-  }
-
+  dimension_group: to_solve {
+      type: duration
+      intervals: [day, hour, minute ]
+      sql_start: ${created_date} ;;
+      sql_end: ${ticket_history_fact.solved_date} ;;
+    }
   ##############################
 
   #### Status Flags ####
@@ -464,7 +456,7 @@ view: ticket {
 
   measure: avg_days_to_solve {
     type: average
-    sql: ${days_to_solve} ;;
+    sql:  ${days_to_solve} ;;
     value_format_name: decimal_2
   }
 
