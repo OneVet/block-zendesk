@@ -26,7 +26,7 @@ view: ticket_close_dates {
 
   dimension_group: timeline_close {
     type: time
-    sql: coalesce(${TABLE}.close,CURRENT_TIMESTAMP()) ;;
+    sql: coalesce(${TABLE}.close,CURRENT_TIMESTAMP) ;;
   }
 
   dimension_group: to_resolution {
