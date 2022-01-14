@@ -4,7 +4,7 @@ view: ticket_history_fact {
   derived_table: {
     sql: SELECT
           tfh.ticket_id
-          ,IFNULL(tc.created, MAX(case when field_name = 'status' and value = 'solved' then updated else null end)) as first_response
+          ,COALESCE(tc.created, MAX(case when field_name = 'status' and value = 'solved' then updated else null end)) as first_response
           ,MAX(case when field_name = 'status' then updated else null end) AS last_updated_status
           ,MAX(case when field_name = 'assignee_id' then updated else null end) AS last_updated_by_assignee
           ,MAX(case when field_name = 'requester_id' then updated else null end) AS last_updated_by_requester
