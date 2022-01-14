@@ -3,7 +3,7 @@ view: ticket_field_option {
 
   dimension: default {
     type: yesno
-    sql: ${TABLE}.``default`` ;;
+    sql: ${TABLE}."default" ;;
   }
 
   dimension: name {

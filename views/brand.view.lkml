@@ -24,7 +24,7 @@ view: brand {
 
   dimension: default {
     type: yesno
-    sql: ${TABLE}.``default`` ;;
+    sql: ${TABLE}."default" ;;
     description: "Is the brand the default brand for this account"
   }
 

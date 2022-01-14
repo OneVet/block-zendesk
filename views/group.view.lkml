@@ -1,5 +1,5 @@
 view: group {
-  sql_table_name: @{SCHEMA_NAME}.`group` ;;
+  sql_table_name: @{SCHEMA_NAME}.group ;;
 
   ### Field descriptions source: https://developer.zendesk.com/rest_api/docs/support/groups
 
