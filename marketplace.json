@@ -5,7 +5,6 @@
     "image_uri": "https://marketplace-api.looker.com/block-icons/zendesk.png",
     "tagline": "The Zendesk Block provides comprehensive analytics around customer support and satisfaction"
   },
-
   "constants": {
     "CONNECTION_NAME": {
       "label": "Connection Name",
@@ -17,12 +16,14 @@
     "ZENDESK_INSTANCE_DOMAIN": {
       "label": "Zendesk Instance Domain",
       "description": "Domain of your Zendesk instance (i.e. if looker.zendesk.com, then provide 'looker')"
+    },
+    "ZENDESK_ORGANIZATION_NAME": {
+      "label": "Name of Your company as registered in Zendesk",
+      "description": "Match the name of your organization, as known to your zendesk instance."
     }
   },
-  "models": [
-    {
-      "name": "block_zendesk_v2",
-      "connection_constant": "CONNECTION_NAME"
-    }
-  ]
+  "models": [{
+    "name": "block_zendesk_v2",
+    "connection_constant": "CONNECTION_NAME"
+  }]
 }
