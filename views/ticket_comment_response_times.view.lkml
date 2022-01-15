@@ -44,13 +44,39 @@ view: ticket_comment_response_times {
         END ;;
       }
       derived_column: responding_agent_id {
-        sql: IF(CASE WHEN LAG(is_agent IS TRUE,1) OVER (PARTITION BY ticket_id ORDER BY created_time ASC) IS NULL
-                  OR (LAG(is_agent IS TRUE,1) OVER (PARTITION BY ticket_id ORDER BY created_time ASC) IS TRUE AND is_agent IS FALSE)
-                  THEN 1
-                 ELSE 0
-                 END = 1,
+        sql:
+             CASE WHEN
+                  CASE WHEN
+                       LAG(is_agent IS TRUE,1) OVER (
+                                                     PARTITION BY ticket_id
+                                                     ORDER BY created_time ASC
+                                                     ) IS NULL
+                       OR (
+                           LAG(is_agent IS TRUE,1) OVER (
+                                                     PARTITION BY ticket_id
+                                                     ORDER BY created_time ASC
+                                                     ) IS TRUE
+                           AND
+                           is_agent IS FALSE
+                           )
+                  THEN
+                      1
+                 ELSE
+                      0
+                 END = 1
+              THEN
                  -- Can replace the first_value input with a "is_suppport_agent" flag after building DT
-                 FIRST_VALUE(CASE WHEN is_agent IS TRUE THEN user_id ELSE NULL END IGNORE NULLS) OVER (PARTITION BY ticket_id ORDER BY created_time ASC ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING), NULL) ;;
+                 FIRST_VALUE( CASE WHEN is_agent THEN created_time ELSE NULL END )
+	                 OVER (
+                         PARTITION BY ticket_id
+						 ORDER BY created_time ASC,
+						          CASE WHEN is_agent THEN 1 ELSE 0 END DESC
+						 ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING
+					 )
+              ELSE
+                 NULL
+              END
+         ;;
       }
       derived_column: first_response {
         sql: CASE WHEN ROW_NUMBER() OVER (PARTITION BY ticket_id ORDER BY created_time ASC) = 1 THEN TRUE ELSE FALSE END ;;
