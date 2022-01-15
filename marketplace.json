@@ -17,6 +17,10 @@
     "ZENDESK_INSTANCE_DOMAIN": {
       "label": "Zendesk Instance Domain",
       "description": "Domain of your Zendesk instance (i.e. if looker.zendesk.com, then provide 'looker')"
+    },
+    "ZENDESK_ORGANIZATION_NAME": {
+      "label": "Name of Your company as registered in Zendesk",
+      "description": "Match the name of your organization, as known to your zendesk instance. Needed to determine which users are your agents to separate them from your customers.)"
     }
   },
   "models": [

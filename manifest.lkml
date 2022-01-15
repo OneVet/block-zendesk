@@ -16,3 +16,8 @@ constant: ZENDESK_INSTANCE_DOMAIN {
   value: "insert here"
   export: override_optional
 }
+
+constant ZENDESK_ORGANIZATION_NAME {
+  value: "insert here"
+  export: override_optional
+}
