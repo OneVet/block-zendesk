@@ -20,7 +20,7 @@
     },
     "ZENDESK_ORGANIZATION_NAME": {
       "label": "Name of Your company as registered in Zendesk",
-      "description": "Match the name of your organization, as known to your zendesk instance. Needed to determine which users are your agents to separate them from your customers.)"
+      "description": "Match the name of your organization, as known to your zendesk instance."
     }
   },
   "models": [

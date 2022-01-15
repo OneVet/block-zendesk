@@ -3,7 +3,7 @@ project_name: "block-zendesk"
 ################ Constants ################
 
 constant: CONNECTION_NAME {
-  value: "fivetran_looker_blocks_demo"
+  value: "analytics"
   export: override_optional
 }
 
@@ -13,11 +13,11 @@ constant: SCHEMA_NAME {
 }
 
 constant: ZENDESK_INSTANCE_DOMAIN {
-  value: "insert here"
+  value: "one-vet"
   export: override_optional
 }
 
 constant ZENDESK_ORGANIZATION_NAME {
-  value: "insert here"
+  value: "One Vet"
   export: override_optional
 }
