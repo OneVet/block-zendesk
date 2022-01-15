@@ -17,7 +17,7 @@ constant: ZENDESK_INSTANCE_DOMAIN {
   export: override_optional
 }
 
-constant ZENDESK_ORGANIZATION_NAME {
+constant: ZENDESK_ORGANIZATION_NAME {
   value: "One Vet"
   export: override_optional
 }
